@@ -22,6 +22,7 @@ This module can breaks the build-process, if code is not conform to a Checkstyle
 You can easily change checkstyles rules by changing checkstyle.config.file property.<br/>
 Checkstyles target can be skipped using skip.checkstyle property</description>
            <ea:build organisation="org.apache.easyant.buildtypes" module="build-std-ant-plugin" revision="0.1"/>
+           <ea:plugin organisation="org.apache.easyant.plugins" module="antunit" revision="0.9"/>
         </info>
         <configurations>
                 <conf name="default" description="runtime dependencies artifact can be used with this conf"/>
@@ -34,9 +35,9 @@ Checkstyles target can be skipped using skip.checkstyle property</description>
         <artifact type="xsl"/>
     </publications>
     <dependencies>
-        <dependency org="checkstyle" name="checkstyle" rev="4.4"/>
-        <dependency org="antlr" name="antlr" rev="2.7.6"/>
-        <dependency org="commons-beanutils" name="commons-beanutils-core" rev="1.7.0"/>
-        <dependency org="commons-logging" name="commons-logging" rev="1.0.3"/>
+        <dependency org="checkstyle" name="checkstyle" rev="4.4" conf="default->default"/>
+        <dependency org="antlr" name="antlr" rev="2.7.6" conf="default->default"/>
+        <dependency org="commons-beanutils" name="commons-beanutils-core" rev="1.7.0" conf="default->default"/>
+        <dependency org="commons-logging" name="commons-logging" rev="1.0.3" conf="default->default"/>
     </dependencies>
 </ivy-module>
