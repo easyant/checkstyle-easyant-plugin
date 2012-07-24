@@ -21,7 +21,8 @@
     
     <!-- Import your plugin --> 
     <property name="skip.corerevision.checker" value="true"/>
-    <import file="../../main/resources/checkstyle.ant"/>
+    <property name="target" value="target/test-antunit"/>
+    <ea:import-test-module moduleIvy="../../../module.ivy" sourceDirectory="../../main/resources"/>
     
     <!-- Defines a setUp / tearDown (before each test) that cleans the environnement --> 
     <target name="clean" description="remove stale build artifacts before / after each test">
@@ -31,9 +32,7 @@
         </delete>
     </target>
     
-    <target name="setUp" depends="clean">
-        <ivy:cachepath pathid="org.apache.easyant.plugins#checkstyle.classpath" conf="default" settingsRef="easyant.ivy.instance" file="../../../module.ivy"/>
-    </target>
+    <target name="setUp" depends="clean"/>
     <target name="tearDown" depends="clean"/>
     
     <!-- init test case -->         
@@ -41,18 +40,14 @@
 <!--
         <antcall target="checkstyle:init" inheritRefs="true"/>
 -->
-        <au:assertTrue message="property 'checkstyle.xsl.file' not set">
-            <isset property="checkstyle.xsl.file"/>
-        </au:assertTrue>
-        <au:assertTrue message="property 'checkstyle.config.file' not set">
-            <isset property="checkstyle.config.file"/>
-        </au:assertTrue>
-        <au:assertTrue message="property 'target.checkstyle.report' not set">
-            <isset property="target.checkstyle.report"/>
-        </au:assertTrue>
-        <au:assertTrue message="property 'checkstyle.report.name' not set">
-            <isset property="checkstyle.report.name"/>
-        </au:assertTrue>
+        <au:assertPropertySet name="checkstyle.xsl.file"/>
+        <au:assertPropertySet name="checkstyle.config.file"/>
+        <au:assertPropertySet name="target.checkstyle.report"/>
+        <au:assertPropertySet name="checkstyle.report.name"/>
+    </target>
+
+    <target name="test-checkstyle:checkstyle" depends="checkstyle:checkstyle">
+       <au:assertFileExists file="${target.checkstyle.report}"/>
     </target>
     
 </project>
