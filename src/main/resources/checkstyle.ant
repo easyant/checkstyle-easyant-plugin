@@ -47,7 +47,7 @@
         </checkstyle>
     </target>
 
-    <target name="checkstyle:report-html" depends="checkstyle:checkstyle" unless="checkstyle.failure">
+    <target name="checkstyle:report-html" depends="checkstyle:checkstyle">
         <xslt in="${target.checkstyle.report}/${checkstyle.report.name}.xml" out="${target.checkstyle.report}/${checkstyle.report.name}.html" style="${checkstyle.xsl.file}" />
     </target>
 
