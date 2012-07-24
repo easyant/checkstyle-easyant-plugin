@@ -18,14 +18,14 @@
 
     <ea:core-version requiredrevision="[0.9,+]" />
 
-    <dirname file="${ant.file.org.apache.easyant.plugins#checkstyle}" property="ant.dir.org.apache.easyant.plugins#checkstyle" />
-
     <target name="checkstyle:init">
-        <ea:parameter property="checkstyle.xsl.file" default="${ant.dir.org.apache.easyant.plugins#checkstyle}/checkstyle.xsl" description="checkstyle xsl, used to transform XML -> HTML" />
-        <ea:parameter property="checkstyle.config.file" default="${ant.dir.org.apache.easyant.plugins#checkstyle}/checkstyle.xml" description="checkstyle rules file" />
-        <ea:parameter property="target.checkstyle.report" default="${target.report}/checkstyle" description="directory where checkstyle report will be generated" />
+        <ea:parameter property="checkstyle.xsl.file" default="${org.apache.easyant.plugins#checkstyle.xsl.file}" description="checkstyle xsl, used to transform XML -> HTML" />
+        <ea:parameter property="checkstyle.config.file" default="${org.apache.easyant.plugins#checkstyle.xml.file}" description="checkstyle rules file" />
+        <ea:parameter property="target.checkstyle.report" default="${target}/report/checkstyle" description="directory where checkstyle report will be generated" />
         <ea:parameter property="checkstyle.report.name" default="checkstyle_report" description="the name of the generated report (without file type)" />
-
+        <ea:parameter property="checkstyle.main.sources" default="${basedir}/src/main/java" description="directory where checkstyle rules will be checked"/>
+        <ea:parameter property="checkstyle.main.sources.includes" default="**/*.java" description="Pattern describing files included in checkstyle checks"/>
+        <ea:parameter property="checkstyle.main.sources.excludes" default="**/*.java" description="Pattern describing files included in checkstyle checks"/>
         <available property="checkstyle.available" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask" classpathref="org.apache.easyant.plugins#checkstyle.classpath" />
 
         <fail unless="checkstyle.available" message="Checkstyle is unavailable!" />
@@ -36,14 +36,13 @@
 
         <taskdef resource="checkstyletask.properties" classpathref="org.apache.easyant.plugins#checkstyle.classpath" />
 
-        <available file="${src.main.java}" property="has.src.main.java" />
     </target>
 
     <target name="checkstyle:checkstyle" unless="skip.checkstyle" depends="checkstyle:init" description="generate checkstyle report">
         <mkdir dir="${target.checkstyle.report}"/>
 
         <checkstyle config="${checkstyle.config.file}" failureProperty="checkstyle.failure" failOnViolation="false">
-            <fileset dir="${src.main.java}" includes="**/*.java" />
+            <fileset dir="${checkstyle.main.sources}" includes="${checkstyle.main.sources.includes}" excludes="${checkstyle.main.sources.excludes}" />
             <formatter type="xml" toFile="${target.checkstyle.report}/${checkstyle.report.name}.xml" />
         </checkstyle>
     </target>
