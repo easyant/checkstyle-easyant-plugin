@@ -35,9 +35,6 @@ Checkstyles target can be skipped using skip.checkstyle property</description>
         <artifact type="xsl"/>
     </publications>
     <dependencies>
-        <dependency org="checkstyle" name="checkstyle" rev="4.4" conf="default->default"/>
-        <dependency org="antlr" name="antlr" rev="2.7.6" conf="default->default"/>
-        <dependency org="commons-beanutils" name="commons-beanutils-core" rev="1.7.0" conf="default->default"/>
-        <dependency org="commons-logging" name="commons-logging" rev="1.0.3" conf="default->default"/>
+        <dependency org="com.puppycrawl.tools" name="checkstyle" rev="5.5" conf="default->default"/>
     </dependencies>
 </ivy-module>
