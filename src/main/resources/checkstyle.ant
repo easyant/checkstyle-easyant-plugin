@@ -25,7 +25,7 @@
         <ea:parameter property="checkstyle.report.name" default="checkstyle_report" description="the name of the generated report (without file type)" />
         <ea:parameter property="checkstyle.main.sources" default="${basedir}/src/main/java" description="directory where checkstyle rules will be checked"/>
         <ea:parameter property="checkstyle.main.sources.includes" default="**/*.java" description="Pattern describing files included in checkstyle checks"/>
-        <ea:parameter property="checkstyle.main.sources.excludes" default="**/*.java" description="Pattern describing files included in checkstyle checks"/>
+        <ea:parameter property="checkstyle.main.sources.excludes" default="" description="Pattern describing files included in checkstyle checks"/>
         <available property="checkstyle.available" classname="com.puppycrawl.tools.checkstyle.CheckStyleTask" classpathref="org.apache.easyant.plugins#checkstyle.classpath" />
 
         <fail unless="checkstyle.available" message="Checkstyle is unavailable!" />
@@ -38,7 +38,7 @@
 
     </target>
 
-    <target name="checkstyle:checkstyle" unless="skip.checkstyle" depends="checkstyle:init" description="generate checkstyle report">
+    <target name="checkstyle:checkstyle" depends="checkstyle:init" description="generate checkstyle report">
         <mkdir dir="${target.checkstyle.report}"/>
 
         <checkstyle config="${checkstyle.config.file}" failureProperty="checkstyle.failure" failOnViolation="false">
@@ -51,7 +51,7 @@
         <xslt in="${target.checkstyle.report}/${checkstyle.report.name}.xml" out="${target.checkstyle.report}/${checkstyle.report.name}.html" style="${checkstyle.xsl.file}" />
     </target>
 
-    <target name="-checkstyle:check" depends="checkstyle:checkstyle" unless="skip.checkstyle">
+    <target name="-checkstyle:check" depends="checkstyle:checkstyle">
         <fail if="checkstyle.failure" message="There is checkstyle violation(s), please check your ${target.checkstyle.report}/${checkstyle.report.name}.html" />
     </target>
 
