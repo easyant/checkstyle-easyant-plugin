@@ -20,20 +20,19 @@
     xmlns:ea="antlib:org.apache.easyant">
     
     <!-- Import your plugin --> 
-<!--
     <property name="skip.corerevision.checker" value="true"/>
--->
     <property name="target" value="target/test-antunit"/>
+    <!-- configure easyant in current project -->
+    <ea:configure-easyant-ivy-instance />
+    <!-- import our local plugin -->
     <ea:import-test-module moduleIvy="../../../module.ivy" sourceDirectory="../../main/resources"/>
     
     <!-- Defines a setUp / tearDown (before each test) that cleans the environnement --> 
     <target name="clean" description="remove stale build artifacts before / after each test">
-<!--
         <delete dir="${basedir}" includeemptydirs="true">
             <include name="**/target/**"/>
             <include name="**/lib/**"/>
         </delete>
--->
     </target>
     
     <target name="setUp" depends="clean"/>
@@ -54,6 +53,12 @@
  
     <target name="test-checkstyle:report-html" depends="checkstyle:report-html">
        <au:assertFileExists file="${target.checkstyle.report}/${checkstyle.report.name}.html"/>
+    </target>
+
+    <target name="test-checkstyle:check">
+       <au:expectfailure message="There is checkstyle violation(s), please check your target/test-antunit/report/checkstyle/checkstyle_report.html">
+           <antcall target="-checkstyle:check"/>
+       </au:expectfailure>
     </target>
 
 </project>
