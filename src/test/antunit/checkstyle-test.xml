@@ -20,7 +20,6 @@
     xmlns:ea="antlib:org.apache.easyant">
     
     <!-- Import your plugin --> 
-    <property name="skip.corerevision.checker" value="true"/>
     <property name="target" value="target/test-antunit"/>
     <!-- configure easyant in current project -->
     <ea:configure-easyant-ivy-instance />
