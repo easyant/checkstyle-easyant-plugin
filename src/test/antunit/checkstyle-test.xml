@@ -59,7 +59,7 @@
     </target>
 
     <target name="test-checkstyle:check">
-       <au:expectfailure message="There is checkstyle violation(s), please check your target/test-antunit/report/checkstyle/checkstyle_report.html">
+       <au:expectfailure expectedmessage="There is checkstyle violation(s), please check your target/test-antunit/report/checkstyle/checkstyle_report.html">
            <antcall target="-checkstyle:check"/>
        </au:expectfailure>
     </target>
