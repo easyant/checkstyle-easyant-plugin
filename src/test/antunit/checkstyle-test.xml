@@ -39,10 +39,14 @@
     
     <!-- init test case -->         
     <target name="test-checkstyle:init" depends="checkstyle:init">
-        <au:assertPropertySet name="checkstyle.xsl.file"/>
-        <au:assertPropertySet name="checkstyle.config.file"/>
-        <au:assertPropertySet name="target.checkstyle.report"/>
-        <au:assertPropertySet name="checkstyle.report.name"/>
+        <au:assertPropertyEquals name="checkstyle.xsl.file" value="${org.apache.easyant.plugins#checkstyle.xsl.file}"/>
+        <au:assertPropertyEquals name="checkstyle.config.file" value="${org.apache.easyant.plugins#checkstyle.xml.file}"/>
+        <au:assertPropertyEquals name="target.checkstyle.report" value="${target}/report/checkstyle"/>
+        <au:assertPropertyEquals name="checkstyle.report.name" value="checkstyle_report"/>
+        <au:assertPropertyEquals name="checkstyle.main.sources" value="${basedir}/src/main/java"/>
+        <au:assertPropertyEquals name="checkstyle.main.sources.includes" value="**/*.java"/>
+        <au:assertPropertyEquals name="checkstyle.main.sources.excludes" value=""/>
+        <au:assertPropertyEquals name="checkstyle.available" value="true"/>
     </target>
 
     <target name="test-checkstyle:checkstyle" depends="checkstyle:checkstyle">
